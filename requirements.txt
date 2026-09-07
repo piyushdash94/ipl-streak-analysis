@@ -1,3 +1,13 @@
-streamlit
-plotly
-matplotlib
+# Core analysis
+numpy>=1.26
+pandas>=2.0
+scipy>=1.11
+statsmodels>=0.14
+matplotlib>=3.8
+
+# Interactive app
+streamlit>=1.30
+plotly>=5.18
+
+# Tests (python -m pytest -q)
+pytest>=8.0

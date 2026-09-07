@@ -1,178 +1,189 @@
-import streamlit as st
-import random
+"""Interactive companion to the IPL streak analysis.
+
+Every number on this page is computed live by ``src/`` -- nothing is
+hard-coded.  That is deliberate: the previous version of this app carried
+pasted constants that had drifted away from (and in places never matched) the
+notebook they came from.
+"""
+
+import sys
+from pathlib import Path
+
+import pandas as pd
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
+import streamlit as st
 
-# ---------- PAGE CONFIG ----------
-st.set_page_config(page_title="IPL Playoff Streak Analysis", layout="wide")
-st.title("🏏 IPL Playoff Analysis: Streaks, Qualification & Team Momentum")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from src import analysis, momentum, streaks  # noqa: E402
 
-# ---------- SECTION 1: IPL POINT SYSTEM ----------
-st.markdown("""## 🧮 IPL Match Point System
-Each IPL team plays 14 league matches. The point system is as follows:
-- ✅ **Win**: 2 points  
-- ❌ **Loss**: 0 points  
-- ⛅ **No Result**: 1 point  
+SERIES = ["#2a78d6", "#eb6834", "#1baf7a"]
 
-Typically, teams require **14 or more points** (usually 7+ wins) to qualify for the playoffs.
-""")
-
-# ---------- SECTION 2: STREAK LOGIC ----------
-st.markdown("""---
-## 🔁 What is a Win Streak? Why Does It Matter?
-
-A **win streak** is the number of consecutive matches a team wins without interruption.
-
-- ✅ **Example of a valid streak**: `['L', 'W', 'W', 'W', 'L']` → 3-match streak → momentum builder  
-- ❌ **Example of poor momentum**: `['W', 'W', 'L', 'W', 'L', 'W', 'L']` → only 2-match streaks
-
-Teams that reach playoffs and win tournaments almost always have **at least one 3-match win streak** during the group stage.
-""")
-
-# ---------- SECTION 3: SIMULATION OF STREAK FREQUENCY ----------
-def simulate_streak_distribution(p_win=0.5, simulations=10000, match_count=14):
-    streak_lengths = []
-    for _ in range(simulations):
-        win_streak, max_streak = 0, 0
-        for _ in range(match_count):
-            if random.random() < p_win:
-                win_streak += 1
-                max_streak = max(max_streak, win_streak)
-            else:
-                win_streak = 0
-        streak_lengths.append(max_streak)
-    return streak_lengths
-
-st.markdown("""---
-## 🧪 Simulation: How Often Do 3+ Match Win Streaks Happen?
-
-We simulate **10,000 seasons** assuming a 50% win probability per match.  
-We record the **longest win streak** in each simulated season.
-""")
-
-streaks = simulate_streak_distribution()
-bins = list(range(1, 11))
-counts = [streaks.count(i) for i in bins]
-fig1 = go.Figure()
-fig1.add_trace(go.Bar(x=bins, y=counts, marker_color='indianred'))
-fig1.update_layout(
-    title='Simulation: Max Win Streaks in 14 Matches (50% Win Rate)',
-    xaxis_title='Longest Win Streak in a Season',
-    yaxis_title='Frequency (out of 10,000)',
-    bargap=0.2
+st.set_page_config(page_title="IPL Streaks & Playoff Qualification", layout="wide")
+st.title("🏏 IPL: what a win streak is actually worth")
+st.caption(
+    "A rebuild of the original streak analysis. Two of its three headline numbers "
+    "were arithmetic or modelling errors; the third was a confound. Details below."
 )
-st.plotly_chart(fig1, use_container_width=True)
 
-st.markdown("""📌 **Insight**: Only ~40% of simulated teams achieve a 3+ win streak.  
-This shows how difficult it is to build momentum by chance alone — strong teams do it more reliably.
-""")
 
-# ---------- SECTION 4: MATH VS SIMULATION COMPARISON ----------
-st.markdown("""---
-## 🤖 Math Model vs Simulation Model
+@st.cache_data
+def _model_table():
+    return analysis.model_comparison()
 
-### Math Model
-- Every match is a **50% chance**
-- Assumes all outcomes equally likely
-- No consideration of team strength
 
-### Simulation Model
-- Reflects realistic win probabilities:
-  - **Weak team**: 40%
-  - **Average**: 50%
-  - **Strong**: 60%
-- Stronger teams are more likely to qualify even under constraints
+@st.cache_data
+def _curves(n_seasons: int):
+    return analysis.format_comparison(n_seasons=n_seasons)
 
-🧠 This plot shows how **team strength impacts qualification under the 2-win-streak constraint**.
-""")
 
-# Data from previous simulation
-labels = ['Weak (40%)', 'Average (50%)', 'Strong (60%)']
-comb_7 = [6.2, 6.2, 6.2]
-comb_8 = [2.49, 2.49, 2.49]
-sim_7 = [13.1, 25.1, 31.3]
-sim_8 = [4.5, 15.6, 36.6]
-sim_7_only = [sim_7[i] - sim_8[i] for i in range(3)]
-comb_7_only = [comb_7[i] - comb_8[i] for i in range(3)]
+@st.cache_data
+def _confound(n_seasons: int):
+    out = analysis.confound_analysis(n_seasons=n_seasons)
+    return out["marginal"], out["stratified"], out["logit"]
 
-fig2 = go.Figure()
-fig2.add_trace(go.Bar(x=labels, y=comb_7_only, name='7 Wins Only (Math Model)', marker_color='#7eb6ff'))
-fig2.add_trace(go.Bar(x=labels, y=comb_8, name='8+ Wins (Math Model)', marker_color='#007acc'))
-fig2.add_trace(go.Bar(x=labels, y=sim_7_only, name='7 Wins Only (Simulated)', marker_color='#ffd78f'))
-fig2.add_trace(go.Bar(x=labels, y=sim_8, name='8+ Wins (Simulated)', marker_color='#ff8c00'))
-fig2.update_layout(
-    barmode='group',
-    title='Playoff Qualification: Math vs Simulated Outcomes (Max 2 Wins in a Row)',
-    xaxis_title='Team Strength',
-    yaxis_title='Qualification Probability (%)',
-    height=600
+
+n_seasons = st.sidebar.slider("Simulated seasons", 5_000, 60_000, 20_000, step=5_000)
+st.sidebar.caption("More seasons = tighter estimates, slower first run.")
+
+# ---------------------------------------------------------------- section 1
+st.header("1. The points table, and what it is actually worth")
+st.markdown(
+    "The old version assumed *7 wins gives you a chance, 8 wins is basically safe*. "
+    "That assumption came from the 8-team era. Since 2022 there are ten teams "
+    "competing for the same four playoff places, and the arithmetic changed."
 )
-st.plotly_chart(fig2, use_container_width=True)
-
-# ---------- SECTION 5: RCB 2023 CASE STUDY ----------
-st.markdown("""---
-## 📘 Real Campaign Spotlight: RCB in IPL 2023
-
-- 🎯 Final Record: 7 Wins, 7 Losses  
-- ❌ Missed Playoffs on Net Run Rate  
-- 🔁 Only one **3-match win streak**
-
-🧪 In 100,000 simulated sequences with max 2-win streaks,  
-only **25,154** matched RCB's exact 7-win path → **~25.2%**
-
-📌 Even teams with 7 wins struggle to qualify without streaks — **NRR and momentum matter**!
-""")
-
-# ---------- SECTION 6: MOMENTUM CHART ----------
-st.markdown("""---
-## 📈 Momentum Paths: Real Campaign Comparisons (2020–2024)
-
-This line chart shows match-by-match **cumulative points** of top teams.  
-Streak-building teams rise sharply.  
-🔴 **RCB 2023** shows a flat, inconsistent path.
-""")
-
-team_paths = {
-    "MI 2020": ['L', 'W', 'W', 'W', 'L', 'W', 'W', 'L', 'W', 'W', 'L', 'W', 'L', 'W'],
-    "CSK 2021": ['W', 'W', 'W', 'W', 'L', 'W', 'W', 'W', 'L', 'L', 'W', 'L', 'L', 'W'],
-    "GT 2022": ['W', 'W', 'W', 'L', 'W', 'W', 'W', 'W', 'L', 'W', 'W', 'L', 'W', 'W'],
-    "RR 2022": ['W', 'W', 'L', 'W', 'W', 'L', 'W', 'L', 'W', 'L', 'W', 'L', 'W', 'L'],
-    "RCB 2023": ['L', 'W', 'L', 'W', 'W', 'L', 'W', 'L', 'L', 'W', 'L', 'W', 'W', 'L']
-}
-colors = ['#1f77b4', '#2ca02c', '#9467bd', '#ff7f0e', 'crimson']
-fig3 = go.Figure()
-for (team, results), color in zip(team_paths.items(), colors):
-    points = [0]
-    tally = 0
-    for r in results:
-        if r == 'W': tally += 2
-        elif r == 'NR': tally += 1
-        points.append(tally)
-    fig3.add_trace(go.Scatter(
-        x=list(range(len(points))),
-        y=points,
-        name=team,
-        mode='lines+markers',
-        line=dict(width=3, color=color)
-    ))
-
-fig3.add_hline(y=14, line=dict(dash='dash', width=2, color='gray'), annotation_text="14-Point Cutoff")
-fig3.update_layout(
-    title="Cumulative Points per Match: Real Team Paths (IPL 2020–2024)",
-    xaxis_title="Match Number",
-    yaxis_title="Total Points",
-    height=600
+curves, cutoffs = _curves(n_seasons)
+fig = go.Figure()
+for colour, (n_teams, grp) in zip(SERIES, curves.groupby("n_teams")):
+    grp = grp[grp.wins.between(4, 12)]
+    fig.add_trace(
+        go.Scatter(
+            x=grp.wins, y=grp.qualify_rate * 100, mode="lines+markers",
+            name=f"{n_teams} teams, 4 spots", line=dict(width=3, color=colour),
+            marker=dict(size=9),
+        )
+    )
+fig.update_layout(
+    xaxis_title="League-stage wins (of 14)", yaxis_title="Chance of finishing top four (%)",
+    height=480, legend_title=None,
 )
-st.plotly_chart(fig3, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
 
-# ---------- SECTION 7: FINAL TAKEAWAYS ----------
-st.markdown("""---
-## ✅ Final Insights
+ten = curves[curves.n_teams == 10].set_index("wins")["qualify_rate"]
+eight = curves[curves.n_teams == 8].set_index("wins")["qualify_rate"]
+cols = st.columns(3)
+cols[0].metric("7 wins, 8-team era", f"{eight.get(7, float('nan'))*100:.0f}%")
+cols[1].metric("7 wins, 10-team era", f"{ten.get(7, float('nan'))*100:.0f}%",
+               delta=f"{(ten.get(7, 0)-eight.get(7, 0))*100:.0f} pts")
+cols[2].metric("8 wins, 10-team era", f"{ten.get(8, float('nan'))*100:.0f}%")
+st.markdown(
+    f"Most common 4th-place cutoff in the 10-team format: "
+    f"**{int(cutoffs[cutoffs.n_teams == 10].sort_values('share').iloc[-1]['cutoff_points'])} points**. "
+    "Sixteen points is where the traffic jam is, which is exactly why NRR keeps deciding it."
+)
 
-- Math models **underestimate** playoff qualification challenges  
-- Simulation shows **strong teams overcome streak constraints** better  
-- Real teams that win the IPL almost always achieve **3+ match win streaks**  
-- Without streaks, teams need favorable NRR and luck
+# ---------------------------------------------------------------- section 2
+st.header("2. Do streaks predict qualification, or just reflect wins?")
+st.markdown(
+    "Below is a simulated league in which match order is **uniformly random** — "
+    "there is provably zero momentum in it. If the 'streak effect' shows up here "
+    "anyway, it is not evidence of momentum."
+)
+marginal, stratified, logit = _confound(n_seasons)
+left, right = st.columns(2)
 
-💡 To qualify — build streaks, not just wins.
-""")
+with left:
+    st.subheader("Pooled across all teams")
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=[f"{int(k)}+ in a row" for k in marginal.streak_threshold],
+                         y=marginal.qualify_rate_with * 100, name="with the streak",
+                         marker_color=SERIES[0]))
+    fig.add_trace(go.Bar(x=[f"{int(k)}+ in a row" for k in marginal.streak_threshold],
+                         y=marginal.qualify_rate_without * 100, name="without it",
+                         marker_color=SERIES[1]))
+    fig.update_layout(barmode="group", yaxis_title="Qualify (%)", height=420)
+    st.plotly_chart(fig, use_container_width=True)
+
+with right:
+    st.subheader("Holding the win total fixed")
+    fig = go.Figure()
+    for colour, wins in zip(SERIES, (7, 8, 9)):
+        grp = stratified[stratified.wins == wins]
+        fig.add_trace(go.Scatter(x=grp.max_streak, y=grp.qualified_rate * 100,
+                                 mode="lines+markers", name=f"{wins} wins",
+                                 line=dict(width=3, color=colour), marker=dict(size=9)))
+    fig.update_layout(xaxis_title="Longest win streak", yaxis_title="Qualify (%)",
+                      yaxis_range=[0, 105], height=420)
+    st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("**Logistic regression on the same simulated seasons:**")
+st.dataframe(
+    logit.round(4)[["model", "term", "coef", "std_err", "p_value", "odds_ratio", "pseudo_r2"]],
+    use_container_width=True, hide_index=True,
+)
+st.markdown(
+    "Streak alone looks powerful. Put the win total in the model and its coefficient "
+    "goes to zero and the fit does not improve. In a world built with no momentum at all, "
+    "that is exactly the right answer — which is the point."
+)
+
+# ---------------------------------------------------------------- section 3
+st.header("3. What the streak-capped model really says")
+st.markdown(
+    "Ask: *if a team never wins more than two in a row, how often does it reach 7 wins?* "
+    "The old analysis answered this three incompatible ways."
+)
+table = _model_table()
+show = table[["p_win", "v1_math_7plus", "v1_sim_7plus", "correct_conditional_7plus"]].copy()
+show.columns = ["Win probability", "v1 “math model” (%)", "v1 “simulation” (%)", "Correct (%)"]
+st.dataframe(show.round(2), use_container_width=True, hide_index=True)
+st.markdown(
+    f"""
+- The **math constant (8.69%)** divided the qualifying count by all {2**14:,} sequences
+  instead of by the {streaks.count_valid_sequences(14, 2):,} that satisfy the constraint.
+  It answers "how likely is a team to be *both* streak-capped *and* on 7 wins", not the
+  question that was asked.
+- The **simulation** forced a loss after every second win. That is a different process:
+  the forced loss costs a match but no coin flip, so it flatters the team.
+- The **correct conditional model** — a p-coin season, conditioned on never winning
+  three in a row — is the middle column's honest counterpart, computed exactly by DP.
+"""
+)
+
+# ---------------------------------------------------------------- section 4
+st.header("4. Try a season yourself")
+p_win = st.slider("Per-match win probability", 0.25, 0.80, 0.50, 0.01)
+cap = st.slider("Maximum consecutive wins allowed", 1, 5, 2)
+c1, c2, c3 = st.columns(3)
+c1.metric("P(7+ wins), unconstrained",
+          f"{streaks.prob_at_least_wins(7, n_matches=14, p_win=p_win, model='unconstrained')*100:.1f}%")
+c2.metric(f"P(7+ wins), capped at {cap}",
+          f"{streaks.prob_at_least_wins(7, n_matches=14, p_win=p_win, model='conditional', cap=cap)*100:.1f}%")
+c3.metric("P(3+ win streak), unconstrained",
+          f"{streaks.prob_at_least_streak(3, n_matches=14, p_win=p_win, model='unconstrained')*100:.1f}%")
+
+st.header("5. Test your own team's season")
+st.markdown("Paste a result string — `W` win, `L` loss, `N` no result, `T` tie. Example: `WLWWLLWLWWLWLL`")
+raw = st.text_input("Season results", value="WLWWLLWLWWLWLL").strip().upper()
+if raw:
+    seq = list(raw)
+    wins = seq.count("W")
+    st.write(
+        f"**{len(seq)} matches · {wins} wins · longest streak {momentum.max_streak(seq)} · "
+        f"{2*wins + seq.count('N') + seq.count('T')} points**"
+    )
+    z = momentum.runs_test_z(seq)
+    if pd.isna(z):
+        st.info("Runs test needs at least one win and one loss.")
+    else:
+        st.write(
+            f"Wald–Wolfowitz runs z = **{z:+.2f}**. "
+            + ("Slightly clumped, but well inside what chance produces."
+               if abs(z) < 1.96 else
+               "Unusually clumped for a season of this record." if z < 0 else
+               "Unusually alternating for a season of this record.")
+        )
+        st.caption(
+            "One season of 14 matches can almost never reach significance on its own — "
+            "which is why the repository tests momentum by pooling every team-season."
+        )

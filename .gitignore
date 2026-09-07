@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Cricsheet archive is re-downloadable; don't commit ~5 MB of it
+data/*.zip
+data/*.json

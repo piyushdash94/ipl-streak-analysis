@@ -1,0 +1,911 @@
+{
+  "model_comparison": [
+    {
+      "p_win": 0.4,
+      "v1_math_7plus": 8.69,
+      "v1_math_8plus": 2.49,
+      "v1_sim_7plus": 17.162517348352,
+      "v1_sim_8plus": 4.431152152576001,
+      "correct_conditional_7plus": 10.216966914372232,
+      "correct_conditional_8plus": 2.0851315869463907,
+      "unconstrained_7plus": 30.754780217344006
+    },
+    {
+      "p_win": 0.5,
+      "v1_math_7plus": 8.69,
+      "v1_math_8plus": 2.49,
+      "v1_sim_7plus": 40.6005859375,
+      "v1_sim_8plus": 15.557861328125,
+      "correct_conditional_7plus": 24.687933425797503,
+      "correct_conditional_8plus": 7.073509015256588,
+      "unconstrained_7plus": 60.4736328125
+    },
+    {
+      "p_win": 0.6,
+      "v1_math_7plus": 8.69,
+      "v1_math_8plus": 2.49,
+      "v1_sim_7plus": 67.933488955392,
+      "v1_sim_8plus": 36.919195877376,
+      "correct_conditional_7plus": 45.1587652405103,
+      "correct_conditional_8plus": 17.64167671251962,
+      "unconstrained_7plus": 84.98598970982401
+    }
+  ],
+  "sequence_counts": {
+    "all_sequences": 16384,
+    "valid_sequences_max_2_streak": 5768,
+    "v1_denominator_reproduced": 8.69
+  },
+  "streak_frequency": [
+    {
+      "p_win": 0.4,
+      "streak_length": 1,
+      "probability": 99.921635835904
+    },
+    {
+      "p_win": 0.4,
+      "streak_length": 2,
+      "probability": 83.04213105049601
+    },
+    {
+      "p_win": 0.4,
+      "streak_length": 3,
+      "probability": 42.69614694400001
+    },
+    {
+      "p_win": 0.4,
+      "streak_length": 4,
+      "probability": 17.330779979776
+    },
+    {
+      "p_win": 0.4,
+      "streak_length": 5,
+      "probability": 6.505784934400001
+    },
+    {
+      "p_win": 0.4,
+      "streak_length": 6,
+      "probability": 2.3730627543040006
+    },
+    {
+      "p_win": 0.5,
+      "streak_length": 1,
+      "probability": 99.993896484375
+    },
+    {
+      "p_win": 0.5,
+      "streak_length": 2,
+      "probability": 93.975830078125
+    },
+    {
+      "p_win": 0.5,
+      "streak_length": 3,
+      "probability": 64.794921875
+    },
+    {
+      "p_win": 0.5,
+      "streak_length": 4,
+      "probability": 34.869384765625
+    },
+    {
+      "p_win": 0.5,
+      "streak_length": 5,
+      "probability": 16.845703125
+    },
+    {
+      "p_win": 0.5,
+      "streak_length": 6,
+      "probability": 7.781982421875
+    },
+    {
+      "p_win": 0.6,
+      "streak_length": 1,
+      "probability": 99.999731564544
+    },
+    {
+      "p_win": 0.6,
+      "streak_length": 2,
+      "probability": 98.49199671705601
+    },
+    {
+      "p_win": 0.6,
+      "streak_length": 3,
+      "probability": 83.065595904
+    },
+    {
+      "p_win": 0.6,
+      "streak_length": 4,
+      "probability": 56.772671717376
+    },
+    {
+      "p_win": 0.6,
+      "streak_length": 5,
+      "probability": 34.2216658944
+    },
+    {
+      "p_win": 0.6,
+      "streak_length": 6,
+      "probability": 19.386548895744
+    }
+  ],
+  "qualification_curve": [
+    {
+      "wins": 1,
+      "n": 1107,
+      "qualify_rate": 0.0,
+      "points": 2,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 2,
+      "n": 3942,
+      "qualify_rate": 0.0,
+      "points": 4,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 3,
+      "n": 9999,
+      "qualify_rate": 0.0,
+      "points": 6,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 4,
+      "n": 18662,
+      "qualify_rate": 0.0,
+      "points": 8,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 5,
+      "n": 28776,
+      "qualify_rate": 0.0005212677231025855,
+      "points": 10,
+      "se": 0.00013455566388733585,
+      "n_teams": 8
+    },
+    {
+      "wins": 6,
+      "n": 36977,
+      "qualify_rate": 0.05465559672228683,
+      "points": 12,
+      "se": 0.001182079027612065,
+      "n_teams": 8
+    },
+    {
+      "wins": 7,
+      "n": 40468,
+      "qualify_rate": 0.4971335376099634,
+      "points": 14,
+      "se": 0.002485461250669537,
+      "n_teams": 8
+    },
+    {
+      "wins": 8,
+      "n": 37235,
+      "qualify_rate": 0.9450248422183429,
+      "points": 16,
+      "se": 0.0011812156048114416,
+      "n_teams": 8
+    },
+    {
+      "wins": 9,
+      "n": 28986,
+      "qualify_rate": 0.9993790105568205,
+      "points": 18,
+      "se": 0.00014632316169898215,
+      "n_teams": 8
+    },
+    {
+      "wins": 10,
+      "n": 18605,
+      "qualify_rate": 1.0,
+      "points": 20,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 11,
+      "n": 9900,
+      "qualify_rate": 1.0,
+      "points": 22,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 12,
+      "n": 3917,
+      "qualify_rate": 1.0,
+      "points": 24,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 13,
+      "n": 1114,
+      "qualify_rate": 1.0,
+      "points": 26,
+      "se": 0.0,
+      "n_teams": 8
+    },
+    {
+      "wins": 1,
+      "n": 1426,
+      "qualify_rate": 0.0,
+      "points": 2,
+      "se": 0.0,
+      "n_teams": 10
+    },
+    {
+      "wins": 2,
+      "n": 4856,
+      "qualify_rate": 0.0,
+      "points": 4,
+      "se": 0.0,
+      "n_teams": 10
+    },
+    {
+      "wins": 3,
+      "n": 12263,
+      "qualify_rate": 0.0,
+      "points": 6,
+      "se": 0.0,
+      "n_teams": 10
+    },
+    {
+      "wins": 4,
+      "n": 23269,
+      "qualify_rate": 0.0,
+      "points": 8,
+      "se": 0.0,
+      "n_teams": 10
+    },
+    {
+      "wins": 5,
+      "n": 36044,
+      "qualify_rate": 0.0,
+      "points": 10,
+      "se": 0.0,
+      "n_teams": 10
+    },
+    {
+      "wins": 6,
+      "n": 46505,
+      "qualify_rate": 0.0019137727126115472,
+      "points": 12,
+      "se": 0.00020266529536743975,
+      "n_teams": 10
+    },
+    {
+      "wins": 7,
+      "n": 50690,
+      "qualify_rate": 0.14920102584336162,
+      "points": 14,
+      "se": 0.0015824800285160017,
+      "n_teams": 10
+    },
+    {
+      "wins": 8,
+      "n": 46494,
+      "qualify_rate": 0.7428055232933282,
+      "points": 16,
+      "se": 0.002027075503836668,
+      "n_teams": 10
+    },
+    {
+      "wins": 9,
+      "n": 36411,
+      "qualify_rate": 0.9871467413693664,
+      "points": 18,
+      "se": 0.0005903114104137429,
+      "n_teams": 10
+    },
+    {
+      "wins": 10,
+      "n": 23290,
+      "qualify_rate": 0.9999570631172177,
+      "points": 20,
+      "se": 4.293596098447891e-05,
+      "n_teams": 10
+    },
+    {
+      "wins": 11,
+      "n": 12273,
+      "qualify_rate": 1.0,
+      "points": 22,
+      "se": 0.0,
+      "n_teams": 10
+    },
+    {
+      "wins": 12,
+      "n": 4812,
+      "qualify_rate": 1.0,
+      "points": 24,
+      "se": 0.0,
+      "n_teams": 10
+    },
+    {
+      "wins": 13,
+      "n": 1311,
+      "qualify_rate": 1.0,
+      "points": 26,
+      "se": 0.0,
+      "n_teams": 10
+    }
+  ],
+  "cutoff_distribution": [
+    {
+      "cutoff_points": 10,
+      "share": 0.0005,
+      "n_teams": 8
+    },
+    {
+      "cutoff_points": 12,
+      "share": 0.06556666666666666,
+      "n_teams": 8
+    },
+    {
+      "cutoff_points": 14,
+      "share": 0.5186333333333333,
+      "n_teams": 8
+    },
+    {
+      "cutoff_points": 16,
+      "share": 0.37933333333333336,
+      "n_teams": 8
+    },
+    {
+      "cutoff_points": 18,
+      "share": 0.035666666666666666,
+      "n_teams": 8
+    },
+    {
+      "cutoff_points": 20,
+      "share": 0.0003,
+      "n_teams": 8
+    },
+    {
+      "cutoff_points": 12,
+      "share": 0.0029333333333333334,
+      "n_teams": 10
+    },
+    {
+      "cutoff_points": 14,
+      "share": 0.22543333333333335,
+      "n_teams": 10
+    },
+    {
+      "cutoff_points": 16,
+      "share": 0.6178666666666667,
+      "n_teams": 10
+    },
+    {
+      "cutoff_points": 18,
+      "share": 0.1486,
+      "n_teams": 10
+    },
+    {
+      "cutoff_points": 20,
+      "share": 0.0051,
+      "n_teams": 10
+    },
+    {
+      "cutoff_points": 22,
+      "share": 6.666666666666667e-05,
+      "n_teams": 10
+    }
+  ],
+  "confound_marginal": [
+    {
+      "streak_threshold": 2,
+      "share_of_teams": 0.910675,
+      "qualify_rate_with": 0.43915502237351417,
+      "qualify_rate_without": 0.000811642877134061
+    },
+    {
+      "streak_threshold": 3,
+      "share_of_teams": 0.631575,
+      "qualify_rate_with": 0.5945928828721846,
+      "qualify_rate_without": 0.06641785980864491
+    },
+    {
+      "streak_threshold": 4,
+      "share_of_teams": 0.367025,
+      "qualify_rate_with": 0.7591172263469791,
+      "qualify_rate_without": 0.19176902721276512
+    },
+    {
+      "streak_threshold": 5,
+      "share_of_teams": 0.198205,
+      "qualify_rate_with": 0.874044549834767,
+      "qualify_rate_without": 0.28281543287249233
+    }
+  ],
+  "confound_stratified": [
+    {
+      "wins": 1,
+      "max_streak": 1,
+      "n": 1749,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 2,
+      "max_streak": 1,
+      "n": 5609,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 2,
+      "max_streak": 2,
+      "n": 894,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 3,
+      "max_streak": 1,
+      "n": 9771,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 3,
+      "max_streak": 2,
+      "n": 5894,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 3,
+      "max_streak": 3,
+      "n": 536,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 4,
+      "max_streak": 1,
+      "n": 10309,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 4,
+      "max_streak": 2,
+      "n": 17136,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 4,
+      "max_streak": 3,
+      "n": 3380,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 4,
+      "max_streak": 4,
+      "n": 375,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 5,
+      "max_streak": 1,
+      "n": 6021,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 5,
+      "max_streak": 2,
+      "n": 29084,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 5,
+      "max_streak": 3,
+      "n": 10814,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 5,
+      "max_streak": 4,
+      "n": 2138,
+      "qualified_rate": 0.0,
+      "se": 0.0
+    },
+    {
+      "wins": 6,
+      "max_streak": 1,
+      "n": 1826,
+      "qualified_rate": 0.0016429353778751369,
+      "se": 0.000947769659864415
+    },
+    {
+      "wins": 6,
+      "max_streak": 2,
+      "n": 30354,
+      "qualified_rate": 0.0016142847730117942,
+      "se": 0.00023042589844093895
+    },
+    {
+      "wins": 6,
+      "max_streak": 3,
+      "n": 21395,
+      "qualified_rate": 0.0019630754849263845,
+      "se": 0.00030261166075810046
+    },
+    {
+      "wins": 6,
+      "max_streak": 4,
+      "n": 6786,
+      "qualified_rate": 0.0035366931918656055,
+      "se": 0.0007206467313024476
+    },
+    {
+      "wins": 6,
+      "max_streak": 5,
+      "n": 1486,
+      "qualified_rate": 0.0013458950201884253,
+      "se": 0.0009510508414822821
+    },
+    {
+      "wins": 7,
+      "max_streak": 2,
+      "n": 19717,
+      "qualified_rate": 0.1545366942232591,
+      "se": 0.002574202883015181
+    },
+    {
+      "wins": 7,
+      "max_streak": 3,
+      "n": 28787,
+      "qualified_rate": 0.14801820266092333,
+      "se": 0.0020930254896226836
+    },
+    {
+      "wins": 7,
+      "max_streak": 4,
+      "n": 13221,
+      "qualified_rate": 0.1473413508811739,
+      "se": 0.003082604243540955
+    },
+    {
+      "wins": 7,
+      "max_streak": 5,
+      "n": 4317,
+      "qualified_rate": 0.15682186703729442,
+      "se": 0.005534417949304127
+    },
+    {
+      "wins": 7,
+      "max_streak": 6,
+      "n": 1121,
+      "qualified_rate": 0.13470115967885815,
+      "se": 0.01019684744533318
+    },
+    {
+      "wins": 8,
+      "max_streak": 2,
+      "n": 7300,
+      "qualified_rate": 0.7417808219178083,
+      "se": 0.005122366134458282
+    },
+    {
+      "wins": 8,
+      "max_streak": 3,
+      "n": 24786,
+      "qualified_rate": 0.7463083999031711,
+      "se": 0.0027638151049525247
+    },
+    {
+      "wins": 8,
+      "max_streak": 4,
+      "n": 17927,
+      "qualified_rate": 0.7422881686841077,
+      "se": 0.0032666276854432562
+    },
+    {
+      "wins": 8,
+      "max_streak": 5,
+      "n": 8078,
+      "qualified_rate": 0.7416439712800198,
+      "se": 0.004870293242647325
+    },
+    {
+      "wins": 8,
+      "max_streak": 6,
+      "n": 2930,
+      "qualified_rate": 0.736518771331058,
+      "se": 0.008138285846633652
+    },
+    {
+      "wins": 8,
+      "max_streak": 7,
+      "n": 906,
+      "qualified_rate": 0.7516556291390728,
+      "se": 0.014353986006102092
+    },
+    {
+      "wins": 9,
+      "max_streak": 2,
+      "n": 1221,
+      "qualified_rate": 0.9893529893529893,
+      "se": 0.002937187338342334
+    },
+    {
+      "wins": 9,
+      "max_streak": 3,
+      "n": 12708,
+      "qualified_rate": 0.9876455775889204,
+      "se": 0.0009798806503436362
+    },
+    {
+      "wins": 9,
+      "max_streak": 4,
+      "n": 16121,
+      "qualified_rate": 0.9870975745921469,
+      "se": 0.0008888321025075445
+    },
+    {
+      "wins": 9,
+      "max_streak": 5,
+      "n": 10138,
+      "qualified_rate": 0.9876701519037285,
+      "se": 0.0010959952810867233
+    },
+    {
+      "wins": 9,
+      "max_streak": 6,
+      "n": 5069,
+      "qualified_rate": 0.9846123495758532,
+      "se": 0.0017288513342671912
+    },
+    {
+      "wins": 9,
+      "max_streak": 7,
+      "n": 2196,
+      "qualified_rate": 0.9863387978142076,
+      "se": 0.0024770875118313987
+    },
+    {
+      "wins": 9,
+      "max_streak": 8,
+      "n": 732,
+      "qualified_rate": 0.9795081967213115,
+      "se": 0.0052364695899525
+    },
+    {
+      "wins": 10,
+      "max_streak": 3,
+      "n": 3214,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 10,
+      "max_streak": 4,
+      "n": 8774,
+      "qualified_rate": 0.9997720537953043,
+      "se": 0.0001611639355914877
+    },
+    {
+      "wins": 10,
+      "max_streak": 5,
+      "n": 8280,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 10,
+      "max_streak": 6,
+      "n": 5319,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 10,
+      "max_streak": 7,
+      "n": 3199,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 10,
+      "max_streak": 8,
+      "n": 1531,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 10,
+      "max_streak": 9,
+      "n": 668,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 11,
+      "max_streak": 4,
+      "n": 2122,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 11,
+      "max_streak": 5,
+      "n": 3886,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 11,
+      "max_streak": 6,
+      "n": 3716,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 11,
+      "max_streak": 7,
+      "n": 2679,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 11,
+      "max_streak": 8,
+      "n": 1798,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 11,
+      "max_streak": 9,
+      "n": 1097,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 11,
+      "max_streak": 10,
+      "n": 579,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 12,
+      "max_streak": 5,
+      "n": 638,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 12,
+      "max_streak": 6,
+      "n": 1323,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 12,
+      "max_streak": 7,
+      "n": 1257,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 12,
+      "max_streak": 8,
+      "n": 1087,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 12,
+      "max_streak": 9,
+      "n": 846,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 12,
+      "max_streak": 10,
+      "n": 622,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    },
+    {
+      "wins": 12,
+      "max_streak": 11,
+      "n": 424,
+      "qualified_rate": 1.0,
+      "se": 0.0
+    }
+  ],
+  "confound_logit": [
+    {
+      "model": "streak only",
+      "term": "max_streak",
+      "coef": 1.2292868712776264,
+      "std_err": 0.004062735447894904,
+      "z": 302.5761551652541,
+      "p_value": 0.0,
+      "odds_ratio": 3.4187906289723013,
+      "pseudo_r2": 0.33913349936381687
+    },
+    {
+      "model": "wins only",
+      "term": "wins",
+      "coef": 2.985572164266549,
+      "std_err": 0.01139682137657228,
+      "z": 261.96533801993246,
+      "p_value": 0.0,
+      "odds_ratio": 19.797826605300664,
+      "pseudo_r2": 0.7457713135496667
+    },
+    {
+      "model": "wins + streak",
+      "term": "wins",
+      "coef": 2.9911748751565717,
+      "std_err": 0.012012469729566062,
+      "z": 249.00581999340653,
+      "p_value": 0.0,
+      "odds_ratio": 19.90905941569024,
+      "pseudo_r2": 0.7457754328160715
+    },
+    {
+      "model": "wins + streak",
+      "term": "max_streak",
+      "coef": -0.009808595914633187,
+      "std_err": 0.00658497035598605,
+      "z": -1.4895429112625704,
+      "p_value": 0.1363444623426947,
+      "odds_ratio": 0.9902393514687187,
+      "pseudo_r2": 0.7457754328160715
+    }
+  ],
+  "momentum_power": [
+    {
+      "momentum_gap": 0.0,
+      "p_win_after_win": 0.5,
+      "p_win_after_loss": 0.5,
+      "power_at_5pct": 0.041666666666666664
+    },
+    {
+      "momentum_gap": 0.05,
+      "p_win_after_win": 0.525,
+      "p_win_after_loss": 0.475,
+      "power_at_5pct": 0.35
+    },
+    {
+      "momentum_gap": 0.1,
+      "p_win_after_win": 0.55,
+      "p_win_after_loss": 0.45,
+      "power_at_5pct": 0.7916666666666666
+    },
+    {
+      "momentum_gap": 0.15,
+      "p_win_after_win": 0.575,
+      "p_win_after_loss": 0.425,
+      "power_at_5pct": 0.9833333333333333
+    },
+    {
+      "momentum_gap": 0.2,
+      "p_win_after_win": 0.6,
+      "p_win_after_loss": 0.4,
+      "power_at_5pct": 1.0
+    }
+  ]
+}
